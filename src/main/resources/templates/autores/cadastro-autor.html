@@ -1,0 +1,19 @@
+<h1>Cadastrar Autor</h1>
+
+<form th:object="${autor}"
+
+      action="/autores"
+
+      method="post">
+
+    <label>Nome do autor</label>
+
+    <input type="text" th:field="*{nomeAutor}" />
+
+    <label>Idade</label>
+
+    <input type="text" th:field="*{idade}" />
+
+    <button type="submit">Cadastrar</button>
+
+</form>
