@@ -1,0 +1,15 @@
+<h1>Cadastrar Autor</h1>
+
+<form th:object="${categoria}"
+
+      action="/autores"
+
+      method="post">
+
+    <label>Tipo de categoria</label>
+
+    <input type="text" th:field="*{nome}" />
+
+    <button type="submit">Cadastrar</button>
+
+</form>

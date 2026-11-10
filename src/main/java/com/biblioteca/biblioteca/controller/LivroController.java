@@ -1,32 +1,38 @@
 package com.biblioteca.biblioteca.controller;
 
-import com.biblioteca.biblioteca.model.Autor;
 import com.biblioteca.biblioteca.model.Livro;
+import com.biblioteca.biblioteca.repository.LivroRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping()
 public class LivroController {
 
-    @GetMapping("/livros")
+    private final LivroRepository repository;
+
+    public LivroController(LivroRepository repository) {
+        this.repository = repository;
+    }
+
+    @GetMapping("")
     public String exibirLivro(Model model){
 
-        Livro livro = new Livro();
-        livro.setTitulo("Dom Casmurro");
-        livro.setAutor("Machado de Assis");
-        livro.setIsbn("978-85-00-00000-0");
-
-        model.addAttribute(
-                "livro",
-                livro
-        );
 
         return "livros/inicio";
+    }
+
+    @GetMapping("/livros")
+    public String listar(Model model) {
+
+        List<Livro> livros = repository.findAll();
+        model.addAttribute("livros", livros);
+
+        return "livros/lista";
     }
 
     @GetMapping("/livros/novo")
@@ -42,8 +48,16 @@ public class LivroController {
 
     @PostMapping("/livros")
     public String cadastrarLivro(@ModelAttribute Livro livro) {
-        return "livros/confirmacao";
+        repository.save(livro);
+        return "redirect:/livros";
 
     }
 
+    @GetMapping("/livros/excluir/{id}")
+    public String excluir(@PathVariable Long id) {
+
+        repository.deleteById(id);
+        return "redirect:/livros";
+
+    }
 }

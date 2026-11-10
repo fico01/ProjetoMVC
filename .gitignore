@@ -31,3 +31,8 @@ build/
 
 ### VS Code ###
 .vscode/
+
+/data
+pom.xml
+.gitignore
+src/main/resources/application.properties
